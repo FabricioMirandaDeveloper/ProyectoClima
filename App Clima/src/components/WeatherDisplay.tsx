@@ -16,7 +16,7 @@ const WeatherDisplay: React.FC = () => {
             if(error instanceof Error) {
                 setError(error.message);
             }else {
-                setError("An unknown error occurred")
+                setError("Ingresa una ciudad válida")
             }
             setWeatherData(null);
         }

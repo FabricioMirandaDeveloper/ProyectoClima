@@ -1,8 +1,7 @@
 import './App.css'
 import { Boton } from './components/Boton'
-import { Header } from './components/Header'
+import Header from './components/Header'
 import WeatherDisplay from './components/WeatherDisplay'
-import './fontawesome';
 function App() {
 
   return (
