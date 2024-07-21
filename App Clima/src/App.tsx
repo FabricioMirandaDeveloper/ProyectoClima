@@ -1,5 +1,4 @@
 import './App.css'
-import { Boton } from './components/Boton'
 import Header from './components/Header'
 import WeatherDisplay from './components/WeatherDisplay'
 function App() {
@@ -8,7 +7,6 @@ function App() {
     <>
       <Header/>
       <WeatherDisplay/>
-      <Boton/>
     </>
   )
 }
