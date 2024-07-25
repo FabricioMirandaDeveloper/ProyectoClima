@@ -11,6 +11,25 @@ export interface WeatherData {
         icon: string;
     }[];
 }
+export interface ForecastData {
+    date: string;
+    temp: number;
+    description: string;
+    icon: string;
+}
+interface WeatherListItem {
+    dt_txt: string;
+    main: {
+        temp: number;
+    };
+    weather: {
+        description: string;
+        icon: string;
+    }[];
+}
+interface ForecastResponse {
+    list: WeatherListItem[];
+}
 
 export const fetchWeather = async (city: string): Promise<WeatherData> => {
     const response = await fetch(
@@ -21,3 +40,21 @@ export const fetchWeather = async (city: string): Promise<WeatherData> => {
     }
     return response.json();
 };
+
+export const fetchForeCast = async (city: string): Promise<ForecastData[]> => {
+    const response = await fetch(`${BASE_URL}forecast?q=${city}&appid=${API_KEY}&units=metric`)
+    if (!response.ok) {
+        throw new Error("Error fetching forecast data");
+    }
+    const data: ForecastResponse = await response.json()
+
+    const dailyData = data.list.filter((reading) => reading.dt_txt.includes("12:00:00")) 
+
+    const forecastData:ForecastData[] = dailyData.map((reading) => ({
+        date: reading.dt_txt,
+        temp: reading.main.temp,
+        description: reading.weather[0].description,
+        icon: reading.weather[0].icon
+    }))
+    return forecastData
+}

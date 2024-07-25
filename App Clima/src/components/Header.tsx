@@ -1,20 +1,24 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCloudSun, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react';
-import { fetchWeather, WeatherData } from '../api';
+import { fetchForeCast, fetchWeather, ForecastData, WeatherData } from '../api';
 
 interface HeaderProps {
   setWeatherData: (data:WeatherData) => void
+  setForecastData: (data:ForecastData[]) => void
 }
-const Header = ({setWeatherData}: HeaderProps) => {
+const Header = ({setWeatherData, setForecastData}: HeaderProps) => {
   const [city, setCity] = useState("")
   const handleFetchWeather = async() => {
     try {
       const data = await fetchWeather(city)
       setWeatherData(data)
+
+      const forecast = await fetchForeCast(city)
+      setForecastData(forecast)
       
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching weather data:", error);
     }
   }
   return (
