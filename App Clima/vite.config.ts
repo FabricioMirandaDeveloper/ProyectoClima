@@ -8,4 +8,7 @@ export default defineConfig({
     host: '0.0.0.0', // Aceptar conexiones desde cualquier IP
     port: 3000, // Puedes cambiar el puerto si es necesario
   },
+  build: {
+    outDir: 'dist',
+  },
 })
