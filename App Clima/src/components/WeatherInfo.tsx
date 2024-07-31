@@ -7,7 +7,7 @@ const WeatherInfo = ({weatherData}: WeatherInfoProps) => {
     return (
         <>
         {weatherData && (
-                <div className='mt-4 flex flex-col justify-center items-center bg-[#313050] text-white p-4 rounded-lg shadow-lg w-9/12 mx-auto sm:w-8/12 md:w-7/12 lg:w-6/12'>
+                <div className='mt-4 flex flex-col justify-center items-center bg-slate-900 text-white p-4 rounded-lg shadow-lg w-9/12 mx-auto sm:w-8/12 md:w-7/12 lg:w-6/12'>
                     <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mb-1">{weatherData.name}</h3>
                     <p className="text-sm sm:text-base md:text-lg lg:text-xl mb-2">Temperature: {weatherData.main.temp}°C</p>
                     <p className="text-sm sm:text-base md:text-lg lg:text-xl mb-3">Description: {weatherData.weather[0].description}</p>

@@ -15,7 +15,7 @@ export const ForecastInfo = ({ forecastData }: ForecastInfoProps) => {
                     {forecastData.map((item) => (
                         <div
                             key={item.date}
-                            className="bg-[#313050] text-white p-4 rounded-lg w-full sm:w-11/12 mx-auto flex flex-col items-center"
+                            className="bg-slate-900 text-white p-4 rounded-lg w-full sm:w-11/12 mx-auto flex flex-col items-center"
                         >
                             <h4 className="text-md sm:text-lg font-semibold mb-2">
                                 {new Date(item.date).toLocaleDateString()}
