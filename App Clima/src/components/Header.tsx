@@ -8,7 +8,7 @@ interface HeaderProps {
   setForecastData: (data:ForecastData[]) => void
 }
 const Header = ({setWeatherData, setForecastData}: HeaderProps) => {
-  const [city, setCity] = useState("")
+  const [city, setCity] = useState<string>("")
   const handleFetchWeather = async() => {
     try {
       const data = await fetchWeather(city)
@@ -21,6 +21,10 @@ const Header = ({setWeatherData, setForecastData}: HeaderProps) => {
       console.error("Error fetching weather data:", error);
     }
   }
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    handleFetchWeather();
+  };
   return (
     <>
       <header className="h-16 bg-[#313050] flex items-center justify-center text-white">
@@ -29,10 +33,12 @@ const Header = ({setWeatherData, setForecastData}: HeaderProps) => {
             <FontAwesomeIcon className='h-6' icon={faCloudSun} />
             <h1 className='font-bold text-lg'>EL CLIMA</h1>
           </div>
-          <div className='relative text-[#313050]'>
+          <form onSubmit={handleSubmit} className='relative text-[#313050]'>
             <input type="text" className='w-36 p-2 rounded-lg sm:w-60 lg:w-80' placeholder='Buscar ciudad' onChange={e=>setCity(e.target.value)} value={city}/>
-            <FontAwesomeIcon className='absolute right-2 top-1/2 transform -translate-y-1/2' icon={faMagnifyingGlass} onClick={handleFetchWeather}/>
-          </div>
+            <button type="submit" className='absolute right-2 top-1/2 transform -translate-y-1/2'>
+            <FontAwesomeIcon className='h-6' icon={faMagnifyingGlass}/>
+            </button>
+          </form>
         </nav>
 
       </header>
