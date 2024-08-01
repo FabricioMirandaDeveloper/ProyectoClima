@@ -58,3 +58,30 @@ export const fetchForeCast = async (city: string): Promise<ForecastData[]> => {
     }))
     return forecastData
 }
+
+export const fetchWeatherByCoords = async (latitude: number, longitude: number): Promise<WeatherData> => {
+    const response = await fetch(`${BASE_URL}weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`)
+    if(!response.ok) {
+        throw new Error("Error fetching weather data by coordinates")
+    }
+    return response.json()
+}
+
+export const fetchForeCastByCootds = async (latitude: number, longitude: number): Promise<ForecastData[]> => {
+    const response = await fetch(`${BASE_URL}forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`)
+    if(!response.ok) {
+        throw new Error("Error fetching forecast data by coordinates")
+    }
+    const data: ForecastResponse = await response.json()
+
+    const dailyData = data.list.filter((reading) => reading.dt_txt.includes("12:00:00")  
+    )
+
+    const forecastData: ForecastData[] = dailyData.map((reading) => ({
+        date: reading.dt_txt,
+        temp: reading.main.temp,
+        description: reading.weather[0].description,
+        icon: reading.weather[0].icon
+    }));
+    return forecastData;
+}
