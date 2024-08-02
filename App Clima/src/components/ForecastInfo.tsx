@@ -1,4 +1,5 @@
 import { ForecastData } from "../api";
+import { translateDescription } from "../utils/weatherTranslations";
 
 interface ForecastInfoProps {
     forecastData: ForecastData[];
@@ -6,6 +7,11 @@ interface ForecastInfoProps {
 
 export const ForecastInfo = ({ forecastData }: ForecastInfoProps) => {
     const hasData = forecastData.length > 0;
+    const getDayName = (dateString: string) => {
+        const date = new Date(dateString)
+        const dayName = date.toLocaleDateString("es-Es",{weekday: "long"})
+        return dayName.charAt(0).toUpperCase() + dayName.slice(1)
+    }
     return (
         <div className="text-center my-5">
             {hasData && (
@@ -18,13 +24,14 @@ export const ForecastInfo = ({ forecastData }: ForecastInfoProps) => {
                             className="bg-slate-900 text-white p-4 rounded-lg w-full sm:w-11/12 mx-auto flex flex-col items-center"
                         >
                             <h4 className="text-md sm:text-lg font-semibold mb-2">
-                                {new Date(item.date).toLocaleDateString()}
+                                {getDayName(item.date)}
                             </h4>
-                            <p className="text-sm sm:text-base md:text-lg mb-1">
-                                Temperature: {item.temp}°C
-                            </p>
+                            <p className="mb-1">
+                                    <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold">{Math.round(item.temp)}</span>
+                                    <sup className="text-sm sm:text-base md:text-lg lg:text-xl">°C</sup>
+                                </p>
                             <p className="text-sm sm:text-base md:text-lg mb-2">
-                                Description: {item.description}
+                                {translateDescription(item.description)}
                             </p>
                             <img
                                 src={`https://openweathermap.org/img/wn/${item.icon}.png`}

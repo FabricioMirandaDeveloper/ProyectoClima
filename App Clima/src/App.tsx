@@ -15,8 +15,6 @@ function App() {
         setWeatherData(weather)
         const forecast = await fetchForeCastByCootds(latitude, longitude);
         setForecastData(forecast);
-        console.log(latitude);
-        console.log(longitude); 
       } catch (error) {
         console.error("Error fetching weather or forecast data:", error);
         
