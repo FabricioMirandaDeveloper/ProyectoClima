@@ -1,4 +1,4 @@
-import { ForecastData } from "../api";
+import { ForecastData } from "../utils/api";
 import { translateDescription } from "../utils/weatherTranslations";
 
 interface ForecastInfoProps {

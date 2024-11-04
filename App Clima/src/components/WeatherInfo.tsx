@@ -1,4 +1,4 @@
-import { WeatherData } from "../api"
+import { WeatherData } from "../utils/api"
 import { translateDescription } from "../utils/weatherTranslations"
 
 interface WeatherInfoProps {

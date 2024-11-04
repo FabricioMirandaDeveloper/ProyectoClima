@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCloudSun, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
-import { useState } from 'react';
-import { fetchForeCast, fetchWeather, ForecastData, WeatherData } from '../api';
+import { useEffect, useState } from 'react';
+import { fetchCities, fetchForeCast, fetchWeather, ForecastData, WeatherData } from '../utils/api';
 
 interface HeaderProps {
   setWeatherData: (data:WeatherData) => void
@@ -9,6 +9,8 @@ interface HeaderProps {
 }
 const Header = ({setWeatherData, setForecastData}: HeaderProps) => {
   const [city, setCity] = useState<string>("")
+  const [suggestedCities, setSuggestedCities] = useState<{ name: string; country: string }[]>([])
+
   const handleFetchWeather = async() => {
     try {
       const data = await fetchWeather(city)
@@ -25,6 +27,18 @@ const Header = ({setWeatherData, setForecastData}: HeaderProps) => {
     event.preventDefault();
     handleFetchWeather();
   };
+
+  useEffect(()=>{
+    const fetchCitySugestions = async () => {
+      if (city.length > 2) {
+        const cities = await fetchCities(city)
+        setSuggestedCities(cities)
+      }else {
+        setSuggestedCities([]);
+      }
+    }
+    fetchCitySugestions()
+  }, [city])
   return (
     <>
       <header className="h-16 bg-slate-900 flex items-center justify-center text-white">
@@ -38,6 +52,23 @@ const Header = ({setWeatherData, setForecastData}: HeaderProps) => {
             <button type="submit" className='absolute right-2 top-1/2 transform -translate-y-1/2'>
             <FontAwesomeIcon className='h-4 sm:h-6' icon={faMagnifyingGlass}/>
             </button>
+
+            {suggestedCities && suggestedCities.length > 0 && (
+              <ul className="absolute bg-white w-full rounded-lg mt-1 max-h-48 overflow-y-auto z-10">
+                {suggestedCities.map((suggestion, index) => (
+                  <li
+                    key={index}
+                    className="p-2 cursor-pointer hover:bg-gray-200"
+                    onClick={() => {
+                      setCity(suggestion.name)
+                      setSuggestedCities([])
+                    }}
+                  >
+                    {suggestion.name}, {suggestion.country}
+                  </li>
+                ))}
+              </ul>
+            )}
           </form>
         </nav>
 

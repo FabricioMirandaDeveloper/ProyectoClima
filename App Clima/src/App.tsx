@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
-import './App.css'
 import Header from './components/Header'
 import WeatherInfo from './components/WeatherInfo'
-import { fetchForeCastByCootds, fetchWeatherByCoords, ForecastData, WeatherData } from './api'
+import { fetchForeCastByCootds, fetchWeatherByCoords, ForecastData, WeatherData } from './utils/api'
 import ForecastInfo from './components/ForecastInfo'
 import { getUserLocation } from './utils/locations'
 function App() {

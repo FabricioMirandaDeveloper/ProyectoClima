@@ -85,3 +85,21 @@ export const fetchForeCastByCootds = async (latitude: number, longitude: number)
     }));
     return forecastData;
 }
+
+export const fetchCities = async(query: string) => {
+    const url = `https://api.openweathermap.org/data/2.5/find?q=${query}&appid=${API_KEY}`
+
+    try {
+        const response = await fetch(url)
+        const data = await response.json()
+        console.log(data.list);
+        
+        return data.list.map((city: { name: string; sys: { country: string } }) => ({
+            name: city.name,
+            country: city.sys.country
+        }))
+    } catch (error) {
+        console.error("Error fetching cities:", error)
+        return []
+    }
+}
